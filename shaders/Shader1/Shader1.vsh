@@ -1,6 +1,3 @@
-//
-// Vertex Shader for Screen Space Normals
-//
 attribute vec3 in_Position;                  // (x,y,z) Current vertex position
 attribute vec3 in_Normal;                    // (x,y,z) This stores the next clockwise vertex position in your case
 attribute vec2 in_TextureCoord;              // (u,v)

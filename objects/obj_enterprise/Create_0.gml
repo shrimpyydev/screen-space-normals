@@ -2,7 +2,7 @@
 // You can write your code in this editor
 vertex_format_begin();
 vertex_format_add_position_3d();
-vertex_format_add_custom(vertex_type_float3, vertex_usage_normal);
+vertex_format_add_normal();
 
 vertex_format_add_texcoord();
 
@@ -43,7 +43,7 @@ for (var i = 0; i < buffer_get_size(buff); i += 36) {
 	}
     
 }
-scale=128/(max_y-min_y);
+scale=512/(max_y-min_y);
 v_buff = vertex_create_buffer();
 var standardize_matrix=matrix_multiply(matrix_build(-mean(min_x,max_x),-mean(min_y,max_y),-mean(min_z,max_z),0,0,0,1,1,1),matrix_build(0,0,0,0,270,0,scale,scale,scale));
 var vert1, vert2, vert3;
