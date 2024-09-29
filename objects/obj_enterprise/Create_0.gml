@@ -1,12 +1,16 @@
 /// @description Insert description here
 // You can write your code in this editor
+//U.S.S. Enterprise model and texture by Riker446: https://sketchfab.com/3d-models/uss-enterprise-ncc-1701-51eef7d604494b6991e425b723bfad95
+//model converted by Penguin model converter for Gamemaker: https://dragonite.itch.io/penguin
+
 vertex_format_begin();
 vertex_format_add_position_3d();
 vertex_format_add_normal();
-
+vertex_format_add_custom(vertex_type_float3,vertex_usage_colour);	
 vertex_format_add_texcoord();
 
 vertex_format_add_colour();
+
 z=256;
 direction=0;
 my_format = vertex_format_end();
@@ -43,7 +47,7 @@ for (var i = 0; i < buffer_get_size(buff); i += 36) {
 	}
     
 }
-scale=512/(max_y-min_y);
+scale=256/(max_y-min_y);
 v_buff = vertex_create_buffer();
 var standardize_matrix=matrix_multiply(matrix_build(-mean(min_x,max_x),-mean(min_y,max_y),-mean(min_z,max_z),0,0,0,1,1,1),matrix_build(0,0,0,0,270,0,scale,scale,scale));
 var vert1, vert2, vert3;
@@ -54,16 +58,19 @@ vert2 = matrix_transform_vertex(standardize_matrix,buffer_peek(buff, i + 36, buf
 vert3 = matrix_transform_vertex(standardize_matrix,buffer_peek(buff, i + 72, buffer_f32),buffer_peek(buff, i + 76, buffer_f32),buffer_peek(buff, i + 80, buffer_f32));
 vertex_position_3d(v_buff, vert1[0], vert1[1], vert1[2]);
 vertex_normal(v_buff,vert2[0],vert2[1],vert2[2]);
+vertex_float3(v_buff, vert3[0], vert3[1], vert3[2]);
 vertex_texcoord(v_buff, buffer_peek(buff,i+24, buffer_f32),buffer_peek(buff,i+28, buffer_f32));
 vertex_color(v_buff,c_white,1);
 	
 vertex_position_3d(v_buff, vert2[0], vert2[1], vert2[2]);
 vertex_normal(v_buff,vert3[0],vert3[1],vert3[2]);	
+vertex_float3(v_buff, vert1[0], vert1[1], vert1[2]);
 vertex_texcoord(v_buff, buffer_peek(buff,i+60, buffer_f32),buffer_peek(buff,i+64, buffer_f32));	
 vertex_color(v_buff,c_white,1);	
 
 vertex_position_3d(v_buff, vert3[0], vert3[1], vert3[2]);
 vertex_normal(v_buff,vert1[0],vert1[1],vert1[2]);
+vertex_float3(v_buff, vert2[0], vert2[1], vert2[2]);
 vertex_texcoord(v_buff, buffer_peek(buff,i+96, buffer_f32),buffer_peek(buff,i+100, buffer_f32));
 vertex_color(v_buff,c_white,1);	
 	
@@ -74,3 +81,8 @@ vertex_end(v_buff);
 buffer_delete(buff);
 x=room_width/2;
 y=room_height/2;
+view_camera[0] = camera_create();
+var viewmat = matrix_build_lookat(x, y, -1000, x, y, 0, 0, 1, 0);
+var projmat = matrix_build_projection_ortho(room_width, room_height, 1.0, 32000.0);
+camera_set_view_mat(view_camera[0], viewmat);
+camera_set_proj_mat(view_camera[0], projmat);
