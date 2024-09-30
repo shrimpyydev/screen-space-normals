@@ -12,9 +12,10 @@ void main()
 {
     if(1.0 - tex_draw == 1.0) // draws the texture with shading based on how far the normal deviates from the camera vector
     {
-        float dotProd = dot(normalize(norm_colour.rgb), vec3(0.0, 0.0, 1.0));
+        float dotProd = dot(norm_colour.rgb, vec3(0.0, 0.0, 1.0));
        float dis = (dotProd + 1.0) * 0.5; // Normalize from [-1, 1] to [0, 1]
-        //gl_FragColor = vec4(dis, dis, dis, 1.0);
+        dis = (dis-0.5)*2.0;
+		//gl_FragColor = vec4(dis, dis, dis, 1.0);
         gl_FragColor = v_vColour * texture2D(gm_BaseTexture, v_vTexcoord) * vec4(dis,dis,dis, 1.0);
     }
     else
@@ -22,6 +23,6 @@ void main()
        
 		
 		
-        gl_FragColor = norm_colour; // draw the normal texture
+        gl_FragColor = norm_colour * vec4(1.0,1.0,1.0,1.0) ; // draw the normal texture
     }
 }

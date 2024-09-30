@@ -41,7 +41,7 @@ void main()
 	
 	
     // Set the color based on the screen space normal, remapping [-1, 1] to [0, 1]
-    norm_colour = vec4((screen_space_normal*0.5+0.5), 1.0);
+    norm_colour = vec4(screen_space_normal * 0.5 + 0.5, 1.0);
 	v_vColour = in_Colour1;
     
     // Pass texture coordinates to the fragment shader
