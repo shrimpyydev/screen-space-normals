@@ -4,10 +4,11 @@ attribute vec2 in_TextureCoord;              // (u,v)
 attribute vec3 in_Colour0;
 attribute vec4 in_Colour1;      
 
-uniform mat4 trans_mat;                      // Object transform matrix
+uniform mat4 trans_mat;  // Object transform matrix
 varying vec2 v_vTexcoord;                    // Pass texture coordinates to fragment shader
 varying vec4 v_vColour;                      // Output color
 varying vec4 norm_colour;
+
 void main()
 {
     // Transform the current position into object space
@@ -38,8 +39,9 @@ void main()
 	vec3 screen_space_normal = normalize(cross(edge_first,edge_last));
 	
 	
+	
     // Set the color based on the screen space normal, remapping [-1, 1] to [0, 1]
-    norm_colour = vec4(0.5 * screen_space_normal + 0.5, 1.0);
+    norm_colour = vec4((screen_space_normal*0.5+0.5), 1.0);
 	v_vColour = in_Colour1;
     
     // Pass texture coordinates to the fragment shader
